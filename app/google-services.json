@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1055405334105",
+    "project_id": "monthlyne",
+    "storage_bucket": "monthlyne.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055405334105:android:1ae3108b0de77822ca5b48",
+        "android_client_info": {
+          "package_name": "com.sergio.monthlyne"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1055405334105-or8gutsu1rhkpn54psisnckn054k5qnm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sergio.monthlyne",
+            "certificate_hash": "fbb96227b0141ae28517353fb6f53ee538e01cfd"
+          }
+        },
+        {
+          "client_id": "1055405334105-sr02n79ma3he0qs7qrukis76m2bg4bqk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2E8zN8HSPUqoQJIpHPE75D-N6ozyx9aY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1055405334105-sr02n79ma3he0qs7qrukis76m2bg4bqk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -8,13 +8,14 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.makeramen.roundedimageview.RoundedImageView
 
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var userEmail : AppCompatTextView
     private lateinit var userName : AppCompatTextView
     private lateinit var logoutBtn : AppCompatButton
-    private lateinit var userPhoto : AppCompatImageView
+    private lateinit var userPhoto : RoundedImageView
 
 
     private lateinit var firebaseAuth : FirebaseAuth

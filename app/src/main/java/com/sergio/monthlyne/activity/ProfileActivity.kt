@@ -1,14 +1,14 @@
-package com.sergio.monthlyne
+package com.sergio.monthlyne.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.makeramen.roundedimageview.RoundedImageView
+import com.sergio.monthlyne.R
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -41,7 +41,7 @@ class ProfileActivity : AppCompatActivity() {
         userEmail = findViewById(R.id.user_email)
         userName = findViewById(R.id.user_name)
         logoutBtn = findViewById(R.id.logout_button)
-        userPhoto = findViewById(R.id.user_photo)
+        userPhoto = findViewById(R.id.post_user_photo)
     }
 
     private fun checkUser() {

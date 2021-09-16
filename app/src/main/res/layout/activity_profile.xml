@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".activity.ProfileActivity">
 
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/user_photo"
+        android:id="@+id/post_user_photo"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_margin="8dp"
@@ -56,8 +56,8 @@
         android:layout_marginRight="8dp"
         android:text="Username:"
 
-        app:layout_constraintEnd_toStartOf="@+id/user_photo"
-        app:layout_constraintTop_toBottomOf="@+id/user_photo" />
+        app:layout_constraintEnd_toStartOf="@+id/post_user_photo"
+        app:layout_constraintTop_toBottomOf="@+id/post_user_photo" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/user_name"
@@ -80,5 +80,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/test_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/logout_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_email" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,6 @@ class ProfileActivity : AppCompatActivity() {
 
     private lateinit var userEmail : AppCompatTextView
     private lateinit var userName : AppCompatTextView
-    private lateinit var logoutBtn : AppCompatButton
     private lateinit var userPhoto : RoundedImageView
 
 
@@ -29,18 +28,11 @@ class ProfileActivity : AppCompatActivity() {
         findViewsById()
         checkUser()
 
-        logoutBtn.setOnClickListener {
-            firebaseAuth.signOut()
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
-
     }
 
     private fun findViewsById() {
         userEmail = findViewById(R.id.user_email)
         userName = findViewById(R.id.user_name)
-        logoutBtn = findViewById(R.id.logout_button)
         userPhoto = findViewById(R.id.post_user_photo)
     }
 

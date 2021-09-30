@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.makeramen.roundedimageview.RoundedImageView
 import com.sergio.monthlyne.R
 import com.sergio.monthlyne.activity.FeedActivity
@@ -27,9 +28,14 @@ class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
         return postList.size
     }
 
+    fun update(postList: List<PostInformation>) {
+        this.postList = postList
+        notifyDataSetChanged()
+    }
+
     class PostViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        val userPhoto : RoundedImageView = itemView.findViewById(R.id.post_user_photo)
-        val userName : TextView = itemView.findViewById(R.id.post_user_name)
+        private val userPhoto : RoundedImageView = itemView.findViewById(R.id.post_user_photo)
+        private val userName : TextView = itemView.findViewById(R.id.post_user_name)
         private val postDate : TextView = itemView.findViewById(R.id.post_date)
         private val postMessage : TextView = itemView.findViewById(R.id.post_message)
         private val postScore : TextView = itemView.findViewById(R.id.post_score)
@@ -38,9 +44,8 @@ class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
             postDate.text = post.postDate
             postMessage.text = post.postContent
             postScore.text = post.postScore.toString()
-
-
+            userName.text = post.postName
+            Glide.with(itemView.context).load(post.postPhotoURL).into(userPhoto)
         }
-
     }
 }

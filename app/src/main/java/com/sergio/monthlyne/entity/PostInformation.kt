@@ -7,5 +7,7 @@ data class PostInformation(
     var postContent:String = "",
     var postScore:Int = 0,
     var postName:String = "",
-    var postPhotoURL:String = ""
+    var postPhotoURL:String = "",
+    var postLikeCounter:MutableList<String> = mutableListOf(),
+    var postDislikeCounter:MutableList<String> = mutableListOf()
 )

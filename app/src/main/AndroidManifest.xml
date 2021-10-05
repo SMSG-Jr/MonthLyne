@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MonthLyne"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.FeedActivity"></activity>
+        <activity android:name=".activity.TimeLineActivity"></activity>
+        <activity android:name=".activity.AddPostActivity" />
+        <activity android:name=".activity.FeedActivity" />
         <activity android:name=".activity.ProfileActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>

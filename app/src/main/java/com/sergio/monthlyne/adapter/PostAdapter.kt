@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.makeramen.roundedimageview.RoundedImageView
 import com.sergio.monthlyne.R
-import com.sergio.monthlyne.activity.FeedActivity
 import com.sergio.monthlyne.entity.PostInformation
 
 class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
-
+    // TODO: 04/10/2021 add the buttons functionality
     private var postList : List<PostInformation> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -37,14 +36,18 @@ class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
         private val userPhoto : RoundedImageView = itemView.findViewById(R.id.post_user_photo)
         private val userName : TextView = itemView.findViewById(R.id.post_user_name)
         private val postDate : TextView = itemView.findViewById(R.id.post_date)
-        private val postMessage : TextView = itemView.findViewById(R.id.post_message)
-        private val postScore : TextView = itemView.findViewById(R.id.post_score)
+        private val postMessage : TextView = itemView.findViewById(R.id.post_profile_message)
+        private val postLike : TextView = itemView.findViewById(R.id.post_score_like)
+        private val postDislike : TextView = itemView.findViewById(R.id.post_score_dislike)
 
         fun set(post : PostInformation){
             postDate.text = post.postDate
             postMessage.text = post.postContent
-            postScore.text = post.postScore.toString()
+            postLike.text = post.postLikeCounter.size.toString()
+            postDislike.text = post.postDislikeCounter.size.toString()
             userName.text = post.postName
+
+
             Glide.with(itemView.context).load(post.postPhotoURL).into(userPhoto)
         }
     }

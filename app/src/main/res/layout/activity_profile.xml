@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activity.ProfileActivity">
 
-
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/post_user_photo"
+        android:id="@+id/profile_user_photo"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_margin="8dp"
@@ -23,6 +22,7 @@
         app:riv_oval="true"
         app:riv_tile_mode="repeat"
         tools:srcCompat="@android:drawable/ic_menu_camera" />
+
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_email"
@@ -55,9 +55,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="Username:"
-
-        app:layout_constraintEnd_toStartOf="@+id/post_user_photo"
-        app:layout_constraintTop_toBottomOf="@+id/post_user_photo" />
+        app:layout_constraintEnd_toStartOf="@+id/profile_user_photo"
+        app:layout_constraintTop_toBottomOf="@+id/profile_user_photo" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/user_name"
@@ -70,5 +69,135 @@
         android:text="Name"
         app:layout_constraintStart_toEndOf="@+id/text_username"
         app:layout_constraintTop_toTopOf="@+id/text_username" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_current_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:textSize="16sp"
+        android:text="Current Post:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_email" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/post_profile_user_photo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_current_post"
+        app:riv_border_color="#333333"
+        app:riv_border_width="2dip"
+        app:riv_corner_radius="30dip"
+        app:riv_mutate_background="true"
+        app:riv_oval="true"
+        app:riv_tile_mode="repeat"
+        tools:srcCompat="@android:drawable/ic_menu_camera" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/post_profile_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="Name:"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/post_profile_user_photo"
+        app:layout_constraintStart_toEndOf="@+id/post_profile_user_photo"
+        app:layout_constraintTop_toTopOf="@+id/post_profile_user_photo" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/post_profile_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="DD/MM/YYYY"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/post_profile_user_name" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/post_profile_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...XXXXXXXX"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/post_profile_date"
+        app:layout_constraintStart_toStartOf="@+id/post_profile_user_photo"
+        app:layout_constraintTop_toBottomOf="@+id/post_profile_user_photo" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/post_image_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/post_profile_message"
+        app:layout_constraintTop_toBottomOf="@+id/post_profile_message"
+        app:srcCompat="@drawable/ic_twotone_thumb_up_24_black" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/post_profile_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="0"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/post_image_like"
+        app:layout_constraintStart_toEndOf="@+id/post_image_like"
+        app:layout_constraintTop_toTopOf="@+id/post_image_like" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/post_image_dislike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintStart_toEndOf="@+id/post_profile_like"
+        app:layout_constraintTop_toTopOf="@+id/post_image_like"
+        app:srcCompat="@drawable/ic_twotone_thumb_down_24_black" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/post_profile_dislike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="0"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/post_image_dislike"
+        app:layout_constraintStart_toEndOf="@+id/post_image_dislike"
+        app:layout_constraintTop_toTopOf="@+id/post_image_dislike" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_no_post"
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You have no post, yet."
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/text_current_post"
+        app:layout_constraintStart_toStartOf="@+id/text_current_post"
+        app:layout_constraintTop_toBottomOf="@+id/text_current_post" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/FAB_add_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/text_post_rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="1"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/divider" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_post_rank"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ranked_post_user_photo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toEndOf="@+id/divider"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_border_color="#333333"
+        app:riv_border_width="2dip"
+        app:riv_corner_radius="30dip"
+        app:riv_mutate_background="true"
+        app:riv_oval="true"
+        app:riv_tile_mode="repeat"
+        tools:srcCompat="@android:drawable/ic_menu_camera" />
+
+    <TextView
+        android:id="@+id/ranked_post_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="Name:"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ranked_post_user_photo"
+        app:layout_constraintStart_toEndOf="@+id/ranked_post_user_photo"
+        app:layout_constraintTop_toTopOf="@+id/ranked_post_user_photo" />
+
+    <TextView
+        android:id="@+id/ranked_post_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="DD/MM/YYYY"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ranked_post_user_name" />
+
+    <TextView
+        android:id="@+id/ranked_post_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...Message...XXXXXXXX"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/ranked_post_date"
+        app:layout_constraintStart_toStartOf="@+id/ranked_post_user_photo"
+        app:layout_constraintTop_toBottomOf="@+id/ranked_post_user_photo" />
+
+    <ImageView
+        android:id="@+id/image_ranked_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ranked_post_message"
+        app:layout_constraintTop_toBottomOf="@+id/ranked_post_message"
+        app:srcCompat="@drawable/ic_twotone_thumb_up_24_black" />
+
+    <ImageView
+        android:id="@+id/image_ranked_dislike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintStart_toEndOf="@+id/text_ranked_post_like"
+        app:layout_constraintTop_toTopOf="@+id/image_ranked_like"
+        app:srcCompat="@drawable/ic_twotone_thumb_down_24_black" />
+
+    <TextView
+        android:id="@+id/text_ranked_post_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/image_ranked_like"
+        app:layout_constraintStart_toEndOf="@+id/image_ranked_like"
+        app:layout_constraintTop_toTopOf="@+id/image_ranked_like" />
+
+    <TextView
+        android:id="@+id/text_ranked_post_dislike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/image_ranked_dislike"
+        app:layout_constraintStart_toEndOf="@+id/image_ranked_dislike"
+        app:layout_constraintTop_toTopOf="@+id/image_ranked_dislike" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

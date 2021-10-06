@@ -53,7 +53,7 @@ class AddPostActivity : AppCompatActivity() {
                 val uName = user?.userName.toString()
                 val uPostId = user?.postId.toString()
                 // TODO: 04/10/2021 add current date to post
-                val newPost = PostInformation(uPostId, uid,"", postMessage, 0, uName, uPhotoURL, mutableListOf(), mutableListOf())
+                val newPost = PostInformation(uPostId, uid,"", postMessage, "0", uName, uPhotoURL, mutableListOf(), mutableListOf())
                 if (uPostId == ""){
                     db.collection("Posts").add(newPost)
                             .addOnSuccessListener { documentReference ->

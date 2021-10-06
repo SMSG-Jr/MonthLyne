@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -50,7 +51,6 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
         checkUser()
     }
 
@@ -74,55 +74,50 @@ class ProfileActivity : AppCompatActivity() {
         startActivity(Intent(this, AddPostActivity::class.java))
     }
 
-
     private fun checkUser() {
         val firebaseUser = firebaseAuth.currentUser
         if (firebaseUser == null){
             startActivity(Intent(this, MainActivity::class.java))
             finish()
+        }else{
+            updateProfileInfo(firebaseUser)
+            updatePostProfileInfo()
         }
-        //updates profile info. ---
-        else{
-            val uEmail = firebaseUser.email
-            val uName = firebaseUser.displayName
-            val uPhoto = firebaseUser.photoUrl
+    }
 
-            userEmail.text = uEmail
-            userName.text = uName
-            Glide.with(this).load(uPhoto).into(userPhoto)
+    private fun updateProfileInfo(firebaseUser: FirebaseUser) {
+        val uEmail = firebaseUser.email
+        val uName = firebaseUser.displayName
+        val uPhoto = firebaseUser.photoUrl
+        userEmail.text = uEmail
+        userName.text = uName
+        Glide.with(this).load(uPhoto).into(userPhoto)
+    }
 
-            //updates post in profile. ---
-            var postId = ""
-            val userID = firebaseAuth.uid.toString()
-            db.collection("Users").document(userID).get()
+    private fun updatePostProfileInfo() {
+        val userID = firebaseAuth.uid.toString()
+        db.collection("Users").document(userID).get()
                 .addOnSuccessListener { result ->
-                    val user : UserInformation = result.toObject()!!
-                    postId = user.postId
-
+                    val user: UserInformation = result.toObject()!!
+                    val postId = user.postId
                     if (postId != "") {
                         db.collection("Posts").document(postId).get()
-                            .addOnSuccessListener { postDoc ->
-
-                                val postInfo : PostInformation = postDoc.toObject()!!
-                                postProfileName.text = postInfo.postName
-                                postProfileDate.text = postInfo.postDate
-                                postProfileMessage.text = postInfo.postContent
-                                postProfileLike.text = postInfo.postLikeCounter.size.toString()
-                                postProfileDislike.text = postInfo.postDislikeCounter.size.toString()
-                                //postProfileDislike.text = postInfo.postScore.toString()//---change
-                                Glide.with(this).load(postInfo.postPhotoURL).into(postProfilePhoto)
-
-                                postVisible()
-
-                            }.addOnFailureListener { exception ->
-                                Log.w("DataBase", "failed to get post document: $exception",)
-                            }
-
+                                .addOnSuccessListener { postDoc ->
+                                    val postInfo: PostInformation = postDoc.toObject()!!
+                                    postProfileName.text = postInfo.postName
+                                    postProfileDate.text = postInfo.postDate
+                                    postProfileMessage.text = postInfo.postContent
+                                    postProfileLike.text = postInfo.postLikeCounter.size.toString()
+                                    postProfileDislike.text = postInfo.postDislikeCounter.size.toString()
+                                    Glide.with(this).load(postInfo.postPhotoURL).into(postProfilePhoto)
+                                    postVisible()
+                                }.addOnFailureListener { exception ->
+                                    Log.w("DataBase", "failed to get post document: $exception")
+                                }
                     }
-                }.addOnFailureListener { exception->
-                    Log.w("DataBase", "failed to get postID: $exception", )
+                }.addOnFailureListener { exception ->
+                    Log.w("DataBase", "failed to get postID: $exception")
                 }
-        }
     }
 
     private fun postVisible() {

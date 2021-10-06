@@ -46,8 +46,6 @@ class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
             postLike.text = post.postLikeCounter.size.toString()
             postDislike.text = post.postDislikeCounter.size.toString()
             userName.text = post.postName
-
-
             Glide.with(itemView.context).load(post.postPhotoURL).into(userPhoto)
         }
     }

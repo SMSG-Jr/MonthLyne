@@ -1,19 +1,17 @@
 package com.sergio.monthlyne.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.sergio.monthlyne.R
 import com.sergio.monthlyne.adapter.PostAdapter
@@ -36,7 +34,6 @@ class FeedActivity : AppCompatActivity() {
 
         findViewsById()
         setSupportActionBar(toolbar)
-        getPostData()
 // TODO: 04/10/2021 add like/dislike button functionality
         postRecyclerView.apply {
             adapter = postAdapter
@@ -59,12 +56,17 @@ class FeedActivity : AppCompatActivity() {
         when (item.itemId){
             R.id.profile_button-> configProfileButton()
             R.id.logout_button-> configLogoutButton()
+            R.id.timeline_button-> configTimelineButton()
         }
         return super.onOptionsItemSelected(item)
     }
 
     private fun configProfileButton() {
         startActivity(Intent(this, ProfileActivity::class.java))
+    }
+    
+    private fun configTimelineButton() {
+        startActivity(Intent(this, TimeLineActivity::class.java))
     }
 
     private fun configLogoutButton() {
@@ -80,24 +82,24 @@ class FeedActivity : AppCompatActivity() {
             finish()
         }
         else{
-            db.collection("Posts").get()
+            setPostsData()
+        }
+    }
+
+    private fun setPostsData() {
+        db.collection("Posts").get()
                 .addOnSuccessListener { result ->
                     postList = result.toObjects(PostInformation::class.java)
                     postAdapter.update(postList)
                 }
                 .addOnFailureListener { exception ->
-                    Log.w("Post loading", "error getting document:",exception)
+                    Log.w("DataBase", "error getting document:", exception)
                 }
-
-        }
     }
 
     private fun findViewsById() {
-        postRecyclerView = findViewById(R.id.user_post_list)
+        postRecyclerView = findViewById(R.id.recyclerview_user_post)
         toolbar = findViewById(R.id.toolbar)
     }
 
-    private fun getPostData() {
-
-    }
 }

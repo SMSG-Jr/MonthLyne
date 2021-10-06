@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MonthLyne"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.TimeLineActivity"></activity>
+        <activity android:name=".activity.PostRankingActivity"></activity>
+        <activity android:name=".activity.TimeLineActivity" />
         <activity android:name=".activity.AddPostActivity" />
         <activity android:name=".activity.FeedActivity" />
         <activity android:name=".activity.ProfileActivity" />

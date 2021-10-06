@@ -32,7 +32,6 @@ class TimeLineActivity : AppCompatActivity(), TimelineAdapter.OnItemClickListene
 
     private val timelineAdapter : TimelineAdapter = TimelineAdapter(this)
 
-    // TODO: 05/10/2021 Testing: add button to create a month ranking of posts
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_time_line)

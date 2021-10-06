@@ -12,12 +12,15 @@ import com.google.firebase.ktx.Firebase
 import com.sergio.monthlyne.R
 import com.sergio.monthlyne.entity.PostInformation
 import com.sergio.monthlyne.entity.UserInformation
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddPostActivity : AppCompatActivity() {
 
     private lateinit var editPostMessage : AppCompatEditText
     private lateinit var sendPostButton : FloatingActionButton
 
+    private val currentDate = Calendar.getInstance()
     private val firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance()
     private val db = Firebase.firestore
 
@@ -52,8 +55,7 @@ class AddPostActivity : AppCompatActivity() {
                 val uPhotoURL = user?.userPhotoURL.toString()
                 val uName = user?.userName.toString()
                 val uPostId = user?.postId.toString()
-                // TODO: 04/10/2021 add current date to post
-                val newPost = PostInformation(uPostId, uid,"", postMessage, 0, uName, uPhotoURL, mutableListOf(), mutableListOf())
+                val newPost = PostInformation(uPostId, uid, getCurrentDate(), postMessage, 0, uName, uPhotoURL, mutableListOf(), mutableListOf())
                 if (uPostId == ""){
                     db.collection("Posts").add(newPost)
                             .addOnSuccessListener { documentReference ->
@@ -75,6 +77,11 @@ class AddPostActivity : AppCompatActivity() {
 
 
 
+    }
+
+    private fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return dateFormat.format(currentDate.time)
     }
 
 

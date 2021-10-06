@@ -43,7 +43,7 @@ class PostRankingActivity : AppCompatActivity() {
         rankedRecyclerView = findViewById(R.id.recyclerView_post_ranking)
     }
     private fun setRankData() {
-        db.collection("TimeLine").document(monthRankId).collection("Post Ranking").get()
+        db.collection("TimeLine").document(monthRankId).collection("Post Ranking").orderBy("rankedPostRank").get()
             .addOnSuccessListener { result ->
                 rankedList = result.toObjects(RankedPostInfo::class.java)
                 rankedAdapter.update(rankedList)

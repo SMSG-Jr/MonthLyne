@@ -4,9 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.Query
@@ -22,8 +26,9 @@ import com.sergio.monthlyne.entity.TimelineInformation
 class TimeLineActivity : AppCompatActivity(), TimelineAdapter.OnItemClickListener {
     private lateinit var timelineRecyclerView : RecyclerView
     private lateinit var toolbar : Toolbar
-    private var timelineList = emptyList<TimelineInformation>()
+    private lateinit var bottomNavigation : BottomNavigationView
 
+    private var timelineList = emptyList<TimelineInformation>()
 
     private lateinit var fabTest : FloatingActionButton // TODO: 06/10/2021 remove later
 
@@ -38,6 +43,14 @@ class TimeLineActivity : AppCompatActivity(), TimelineAdapter.OnItemClickListene
 
         findViewsById()
         setSupportActionBar(toolbar)
+        bottomNavigation.setOnNavigationItemSelectedListener { itemSelected ->
+            when(itemSelected.itemId){
+                R.id.bottom_nav_post -> configPostButton()
+                R.id.bottom_nav_profile -> configProfileButton()
+            }
+            true
+        }
+
         timelineRecyclerView.apply {
             adapter = timelineAdapter
             layoutManager = LinearLayoutManager(context)
@@ -68,6 +81,30 @@ class TimeLineActivity : AppCompatActivity(), TimelineAdapter.OnItemClickListene
         super.onResume()
         checkUser()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater : MenuInflater = menuInflater
+        inflater.inflate(R.menu.toolbar, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
+            R.id.logout_button-> configLogoutButton()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+    private fun configLogoutButton() {
+        firebaseAuth.signOut()
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+    private fun configProfileButton() {
+        startActivity(Intent(this, ProfileActivity::class.java))
+    }
+    private fun configPostButton() {
+        startActivity(Intent(this, FeedActivity::class.java))
+    }
+
     private fun checkUser() {
         val firebaseUser = firebaseAuth.currentUser
         if (firebaseUser == null) {
@@ -92,7 +129,7 @@ class TimeLineActivity : AppCompatActivity(), TimelineAdapter.OnItemClickListene
     private fun findViewsById() {
         timelineRecyclerView = findViewById(R.id.recyclerView_timeline)
         toolbar = findViewById(R.id.toolbar)
-
+        bottomNavigation = findViewById(R.id.bottom_navigation)
         fabTest = findViewById(R.id.FAB_test) // TODO: 06/10/2021 remove later
     }
 

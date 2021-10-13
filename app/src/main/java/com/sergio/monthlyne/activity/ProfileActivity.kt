@@ -4,10 +4,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -20,6 +25,8 @@ import com.sergio.monthlyne.entity.PostInformation
 import com.sergio.monthlyne.entity.UserInformation
 
 class ProfileActivity : AppCompatActivity() {
+    private lateinit var toolbar : Toolbar
+    private lateinit var bottomNavigation : BottomNavigationView
 
     private lateinit var userEmail : AppCompatTextView
     private lateinit var userName : AppCompatTextView
@@ -44,6 +51,15 @@ class ProfileActivity : AppCompatActivity() {
 
         findViewsById()
         postInvisible()
+
+        setSupportActionBar(toolbar)
+        bottomNavigation.setOnNavigationItemSelectedListener { itemSelected ->
+            when(itemSelected.itemId){
+                R.id.bottom_nav_post -> configPostButton()
+                R.id.bottom_nav_post_ranking ->configTimelineButton()
+            }
+            true
+        }
         buttonAddPost.setOnClickListener {
             addPostButtonConfig()
         }
@@ -52,6 +68,31 @@ class ProfileActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checkUser()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater : MenuInflater = menuInflater
+        inflater.inflate(R.menu.toolbar, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
+            R.id.logout_button-> configLogoutButton()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+    private fun configLogoutButton() {
+        firebaseAuth.signOut()
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+    private fun configTimelineButton() {
+        startActivity(Intent(this, TimeLineActivity::class.java))
+        finish()
+    }
+    private fun configPostButton() {
+        startActivity(Intent(this, FeedActivity::class.java))
+        finish()
     }
 
     private fun findViewsById() {
@@ -68,6 +109,9 @@ class ProfileActivity : AppCompatActivity() {
         postProfileImageDislike = findViewById(R.id.post_image_dislike)
         noPostText = findViewById(R.id.text_no_post)
         buttonAddPost = findViewById(R.id.FAB_add_post)
+        toolbar = findViewById(R.id.toolbar)
+        bottomNavigation = findViewById(R.id.bottom_navigation)
+
     }
 
     private fun addPostButtonConfig() {

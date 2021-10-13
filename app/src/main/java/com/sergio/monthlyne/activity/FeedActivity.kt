@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -21,6 +22,8 @@ class FeedActivity : AppCompatActivity() {
     // TODO: 04/10/2021 add a bottom navigation to access profile and timeline activity
     private lateinit var postRecyclerView : RecyclerView
     private lateinit var toolbar : Toolbar
+    private lateinit var bottomNavigation : BottomNavigationView
+
     private var postList = emptyList<PostInformation>()
 
     private val firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance()
@@ -34,6 +37,13 @@ class FeedActivity : AppCompatActivity() {
 
         findViewsById()
         setSupportActionBar(toolbar)
+        bottomNavigation.setOnNavigationItemSelectedListener { itemSelected ->
+            when(itemSelected.itemId){
+                R.id.bottom_nav_post_ranking ->configTimelineButton()
+                R.id.bottom_nav_profile -> configProfileButton()
+            }
+            true
+        }
 // TODO: 04/10/2021 add like/dislike button functionality
         postRecyclerView.apply {
             adapter = postAdapter
@@ -48,25 +58,25 @@ class FeedActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater : MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu, menu)
+        inflater.inflate(R.menu.toolbar, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
-            R.id.profile_button-> configProfileButton()
             R.id.logout_button-> configLogoutButton()
-            R.id.timeline_button-> configTimelineButton()
         }
         return super.onOptionsItemSelected(item)
     }
 
     private fun configProfileButton() {
         startActivity(Intent(this, ProfileActivity::class.java))
+        finish()
     }
     
     private fun configTimelineButton() {
         startActivity(Intent(this, TimeLineActivity::class.java))
+        finish()
     }
 
     private fun configLogoutButton() {
@@ -100,6 +110,7 @@ class FeedActivity : AppCompatActivity() {
     private fun findViewsById() {
         postRecyclerView = findViewById(R.id.recyclerview_user_post)
         toolbar = findViewById(R.id.toolbar)
+        bottomNavigation = findViewById(R.id.bottom_navigation)
     }
 
 }

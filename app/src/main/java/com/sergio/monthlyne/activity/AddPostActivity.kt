@@ -61,6 +61,7 @@ class AddPostActivity : AppCompatActivity() {
                             .addOnSuccessListener { documentReference ->
                                 Log.w("DataBase", "updated post ID in user: ${documentReference.id}")
                                 db.collection("Users").document(uid).update("postId", documentReference.id)
+                                db.collection("Posts").document(documentReference.id).update("id", documentReference.id)
                             }.addOnFailureListener { e->
                                 Log.w("DataBase", "failed to update post ID in user: $e")
                             }

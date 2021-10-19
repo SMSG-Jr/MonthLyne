@@ -3,6 +3,7 @@ package com.sergio.monthlyne.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -11,8 +12,7 @@ import com.makeramen.roundedimageview.RoundedImageView
 import com.sergio.monthlyne.R
 import com.sergio.monthlyne.entity.PostInformation
 
-class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
-    // TODO: 04/10/2021 add the buttons functionality
+class PostAdapter(private val likeDislikeBtnInterface: LikeDislikeBtnInterface) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
     private var postList : List<PostInformation> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -22,6 +22,12 @@ class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.set(postList[position])
+        holder.postLikeButton.setOnClickListener {
+            likeDislikeBtnInterface.likeButtonConfig(postList[position], position)
+        }
+        holder.postDislikeButton.setOnClickListener {
+            likeDislikeBtnInterface.dislikeButtonConfig(postList[position], position)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -40,6 +46,8 @@ class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
         private val postMessage : TextView = itemView.findViewById(R.id.post_profile_message)
         private val postLike : TextView = itemView.findViewById(R.id.post_score_like)
         private val postDislike : TextView = itemView.findViewById(R.id.post_score_dislike)
+        val postLikeButton : ImageButton = itemView.findViewById(R.id.button_thumb_up)
+        val postDislikeButton : ImageButton = itemView.findViewById(R.id.button_thumb_down)
 
         fun set(post : PostInformation){
             postDate.text = post.postDate

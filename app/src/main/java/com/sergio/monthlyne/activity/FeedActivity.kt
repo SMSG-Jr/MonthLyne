@@ -15,11 +15,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.sergio.monthlyne.R
+import com.sergio.monthlyne.adapter.LikeDislikeBtnInterface
 import com.sergio.monthlyne.adapter.PostAdapter
 import com.sergio.monthlyne.entity.PostInformation
 
-class FeedActivity : AppCompatActivity() {
-    // TODO: 04/10/2021 add a bottom navigation to access profile and timeline activity
+class FeedActivity : AppCompatActivity(), LikeDislikeBtnInterface {
     private lateinit var postRecyclerView : RecyclerView
     private lateinit var toolbar : Toolbar
     private lateinit var bottomNavigation : BottomNavigationView
@@ -29,7 +29,7 @@ class FeedActivity : AppCompatActivity() {
     private val firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance()
     private val db = Firebase.firestore
 
-    private val postAdapter : PostAdapter = PostAdapter()
+    private val postAdapter : PostAdapter = PostAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,7 @@ class FeedActivity : AppCompatActivity() {
             }
             true
         }
-// TODO: 04/10/2021 add like/dislike button functionality
+
         postRecyclerView.apply {
             adapter = postAdapter
             layoutManager = LinearLayoutManager(context)
@@ -112,5 +112,26 @@ class FeedActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         bottomNavigation = findViewById(R.id.bottom_navigation)
     }
+
+    override fun likeButtonConfig(postInfo: PostInformation, position: Int) {
+        postInfo.postLikeCounter.remove(firebaseAuth.uid)
+        postInfo.postDislikeCounter.remove(firebaseAuth.uid)
+        postInfo.postLikeCounter.add(firebaseAuth.uid!!)
+        postInfo.postScore = (postInfo.postLikeCounter.size - postInfo.postDislikeCounter.size)
+
+        db.collection("Posts").document(postInfo.id).set(postInfo)
+        setPostsData()
+    }
+
+    override fun dislikeButtonConfig(postInfo: PostInformation, position: Int) {
+        postInfo.postLikeCounter.remove(firebaseAuth.uid)
+        postInfo.postDislikeCounter.remove(firebaseAuth.uid)
+        postInfo.postDislikeCounter.add(firebaseAuth.uid!!)
+        postInfo.postScore = (postInfo.postLikeCounter.size - postInfo.postDislikeCounter.size)
+
+        db.collection("Posts").document(postInfo.id).set(postInfo)
+        setPostsData()
+    }
+
 
 }

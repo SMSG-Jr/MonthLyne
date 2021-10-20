@@ -1,8 +1,11 @@
 package com.sergio.monthlyne.activity
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -37,12 +40,28 @@ class AddPostActivity : AppCompatActivity() {
     private fun sendPostButtonConfig() {
         val postMessage = editPostMessage.text.toString()
         if (postMessage != ""){
-            // TODO: 04/10/2021 add confirmation box
-            addPostToDatabase(postMessage)
-            finish()
+            addPostConfirmDialog(postMessage)
+
         }else{
             editPostMessage.error = "Post cannot be empty."
         }
+    }
+
+    private fun addPostConfirmDialog(postMessage: String) {
+
+            val confirmAlertDialog = AlertDialog.Builder(this)
+            confirmAlertDialog.setTitle("Send Post?")
+            confirmAlertDialog.setMessage("Your previous post will be replaced. \nDo you wish to continue.")
+
+            confirmAlertDialog.setPositiveButton("Post!"){ _: DialogInterface, _:Int->
+                addPostToDatabase(postMessage)
+                Toast.makeText(this, "Post Sent!", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            confirmAlertDialog.setNegativeButton("Cancel."){ dialog: DialogInterface, _:Int ->
+                dialog.dismiss()
+            }
+            confirmAlertDialog.show()
     }
 
     private fun addPostToDatabase(postMessage: String) {
@@ -75,9 +94,6 @@ class AddPostActivity : AppCompatActivity() {
         }.addOnFailureListener { exception->
                 Log.w("DataBase", "failed to get user document: $exception", )
             }
-
-
-
     }
 
     private fun getCurrentDate(): String {

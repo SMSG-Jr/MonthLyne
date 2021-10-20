@@ -22,6 +22,8 @@ import com.sergio.monthlyne.adapter.TimelineAdapter
 import com.sergio.monthlyne.entity.PostInformation
 import com.sergio.monthlyne.entity.RankedPostInfo
 import com.sergio.monthlyne.entity.TimelineInformation
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TimeLineActivity : AppCompatActivity(), TimelineAdapter.OnItemClickListener {
     private lateinit var timelineRecyclerView : RecyclerView
@@ -32,6 +34,7 @@ class TimeLineActivity : AppCompatActivity(), TimelineAdapter.OnItemClickListene
 
     private lateinit var fabTest : FloatingActionButton // TODO: 06/10/2021 remove later
 
+    private val currentDate = Calendar.getInstance()
     private val firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance()
     private val db = Firebase.firestore
 
@@ -60,10 +63,15 @@ class TimeLineActivity : AppCompatActivity(), TimelineAdapter.OnItemClickListene
         }
     }
 
+    private fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("MM/yyyy", Locale.getDefault())
+        return dateFormat.format(currentDate.time)
+    }
     private fun addPostRanking() {
+        val dateId = "${currentDate.get(Calendar.MONTH)+1}.${currentDate.get(Calendar.YEAR)}"
 
-        val monthRank = TimelineInformation("testes", "MM/YYYY")
-        db.collection("TimeLine").document("testes").set(monthRank)
+        val monthRank = TimelineInformation(dateId, getCurrentDate())
+        db.collection("TimeLine").document(dateId).set(monthRank)
 
         db.collection("Posts").orderBy("postScore", Query.Direction.DESCENDING).limit(5).get()
                 .addOnSuccessListener { result->
@@ -71,7 +79,7 @@ class TimeLineActivity : AppCompatActivity(), TimelineAdapter.OnItemClickListene
                     for (document in result){
                         val queryPost = document.toObject(PostInformation::class.java)
                         val rankedPost = RankedPostInfo(queryPost.userId, rank.toString(), queryPost.postPhotoURL, queryPost.postName, queryPost.postDate, queryPost.postContent, queryPost.postLikeCounter.size.toString(), queryPost.postDislikeCounter.size.toString())
-                        db.collection("TimeLine").document("testes").collection("Post Ranking").add(rankedPost)
+                        db.collection("TimeLine").document(dateId).collection("Post Ranking").add(rankedPost)
                         rank += 1
                     }
                 }

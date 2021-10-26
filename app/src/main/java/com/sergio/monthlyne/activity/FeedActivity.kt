@@ -114,24 +114,26 @@ class FeedActivity : AppCompatActivity(), LikeDislikeBtnInterface {
     }
 
     override fun likeButtonConfig(postInfo: PostInformation, position: Int) {
-        postInfo.postLikeCounter.remove(firebaseAuth.uid)
+        if(!postInfo.postLikeCounter.remove(firebaseAuth.uid)){
+            postInfo.postLikeCounter.add(firebaseAuth.uid.toString())
+        }
         postInfo.postDislikeCounter.remove(firebaseAuth.uid)
-        postInfo.postLikeCounter.add(firebaseAuth.uid!!)
+
         postInfo.postScore = (postInfo.postLikeCounter.size - postInfo.postDislikeCounter.size)
 
         db.collection("Posts").document(postInfo.id).set(postInfo)
-        setPostsData()
+        postAdapter.notifyItemChanged(position)
     }
 
     override fun dislikeButtonConfig(postInfo: PostInformation, position: Int) {
+        if (!postInfo.postDislikeCounter.remove(firebaseAuth.uid)){
+            postInfo.postDislikeCounter.add(firebaseAuth.uid.toString())
+        }
         postInfo.postLikeCounter.remove(firebaseAuth.uid)
-        postInfo.postDislikeCounter.remove(firebaseAuth.uid)
-        postInfo.postDislikeCounter.add(firebaseAuth.uid!!)
+
         postInfo.postScore = (postInfo.postLikeCounter.size - postInfo.postDislikeCounter.size)
 
         db.collection("Posts").document(postInfo.id).set(postInfo)
-        setPostsData()
+        postAdapter.notifyItemChanged(position)
     }
-
-
 }

@@ -32,8 +32,6 @@ class TimeLineActivity : AppCompatActivity(), TimelineAdapter.OnItemClickListene
 
     private var timelineList = emptyList<TimelineInformation>()
 
-    private lateinit var fabTest : FloatingActionButton // TODO: 06/10/2021 remove later
-
     private val currentDate = Calendar.getInstance()
     private val firebaseAuth : FirebaseAuth = FirebaseAuth.getInstance()
     private val db = Firebase.firestore
@@ -58,15 +56,15 @@ class TimeLineActivity : AppCompatActivity(), TimelineAdapter.OnItemClickListene
             adapter = timelineAdapter
             layoutManager = LinearLayoutManager(context)
         }
-        fabTest.setOnClickListener {
-            addPostRanking()
-        }
+
     }
 
     private fun getCurrentDate(): String {
         val dateFormat = SimpleDateFormat("MM/yyyy", Locale.getDefault())
         return dateFormat.format(currentDate.time)
     }
+
+    // TODO: 26/10/2021 move to WorkManager for scheduler
     private fun addPostRanking() {
         val dateId = "${currentDate.get(Calendar.MONTH)+1}.${currentDate.get(Calendar.YEAR)}"
 
@@ -108,9 +106,11 @@ class TimeLineActivity : AppCompatActivity(), TimelineAdapter.OnItemClickListene
     }
     private fun configProfileButton() {
         startActivity(Intent(this, ProfileActivity::class.java))
+        finish()
     }
     private fun configPostButton() {
         startActivity(Intent(this, FeedActivity::class.java))
+        finish()
     }
 
     private fun checkUser() {
@@ -138,7 +138,6 @@ class TimeLineActivity : AppCompatActivity(), TimelineAdapter.OnItemClickListene
         timelineRecyclerView = findViewById(R.id.recyclerView_timeline)
         toolbar = findViewById(R.id.toolbar)
         bottomNavigation = findViewById(R.id.bottom_navigation)
-        fabTest = findViewById(R.id.FAB_test) // TODO: 06/10/2021 remove later
     }
 
     override fun onItemClick(position: Int) {

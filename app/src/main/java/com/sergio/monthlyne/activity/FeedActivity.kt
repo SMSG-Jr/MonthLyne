@@ -71,12 +71,10 @@ class FeedActivity : AppCompatActivity(), LikeDislikeBtnInterface {
 
     private fun configProfileButton() {
         startActivity(Intent(this, ProfileActivity::class.java))
-        finish()
     }
     
     private fun configTimelineButton() {
         startActivity(Intent(this, TimeLineActivity::class.java))
-        finish()
     }
 
     private fun configLogoutButton() {

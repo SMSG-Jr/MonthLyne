@@ -1,4 +1,4 @@
-package com.sergio.monthlyne
+package com.sergio.monthlyne.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +14,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.sergio.monthlyne.R
+import com.sergio.monthlyne.entity.UserInformation
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,10 +25,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var googleSignInBtn : com.google.android.gms.common.SignInButton
     private lateinit var googleSignInClient : GoogleSignInClient
     private lateinit var firebaseAuth : FirebaseAuth
+    private val db = Firebase.firestore
 
     private companion object{
         private const val RC_SIGN_IN = 100
         private const val TAG = "GOOGLE_SIGN_IN_TAG"
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,30 +52,33 @@ class MainActivity : AppCompatActivity() {
         googleSignInBtn.setOnClickListener {
             progressBar.visibility = View.VISIBLE
             Log.d(TAG, "onCreate: begin google sign in")
-            val intent = googleSignInClient.signInIntent
-            startActivityForResult(intent, RC_SIGN_IN)
+            googleSignInClient.signOut()
+            val signInIntent = googleSignInClient.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
         }
     }
 
     private fun checkUser() {
         val firebaseUser = firebaseAuth.currentUser
         if (firebaseUser != null){
-            startActivity(Intent(this, ProfileActivity::class.java))
+            startActivity(Intent(this, FeedActivity::class.java))
             finish()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == RC_SIGN_IN){
-            Log.d(TAG, "onActivityResult: google Sign in intent result")
             val accountTask = GoogleSignIn.getSignedInAccountFromIntent(data)
+            Log.d(TAG, "onActivityResult: google Sign in intent result")
             try {
                 val account = accountTask.getResult(ApiException::class.java)
                 firebaseAuthWithGoogleAccount(account)
             }
             catch (e: Exception){
                 Log.d(TAG, "onActivityResult: ${e.message}")
+                progressBar.visibility = View.INVISIBLE
             }
 
         }
@@ -84,11 +93,15 @@ class MainActivity : AppCompatActivity() {
                     val firebaseUser = firebaseAuth.currentUser
                     val uid = firebaseUser!!.uid
                     val email = firebaseUser.email
+                    val uName = firebaseUser.displayName
+                    val uPhoto = firebaseUser.photoUrl
 
                     Log.d(TAG, "firebaseAuthWithGoogleAccount: UID: $uid")
                     Log.d(TAG, "firebaseAuthWithGoogleAccount: email: $email")
 
                     if (authResult.additionalUserInfo!!.isNewUser){
+                        val userInfo = UserInformation(uid, uName.toString(), email.toString(), uPhoto.toString(),"")
+                        db.collection("Users").document(uid).set(userInfo)
                         Log.d(TAG, "firebaseAuthWithGoogleAccount: Account Created. \n$email")
                         Toast.makeText(this, "Account Created. \n$email", Toast.LENGTH_SHORT).show()
                     }
@@ -96,12 +109,13 @@ class MainActivity : AppCompatActivity() {
                         Log.d(TAG, "firebaseAuthWithGoogleAccount: Existing User. \n$email")
                         Toast.makeText(this, "Logged In. \n$email", Toast.LENGTH_SHORT).show()
                     }
-                    startActivity(Intent(this, ProfileActivity::class.java))
+                    startActivity(Intent(this, FeedActivity::class.java))
                     finish()
                 }
                 .addOnFailureListener { e ->
                     Log.d(TAG, "firebaseAuthWithGoogleAccount: login failed due to ${e.message}")
                     Toast.makeText(this, "login failed due to ${e.message}", Toast.LENGTH_SHORT).show()
+                    progressBar.visibility = View.INVISIBLE
                 }
     }
 

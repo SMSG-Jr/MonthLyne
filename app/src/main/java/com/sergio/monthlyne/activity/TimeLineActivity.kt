@@ -64,24 +64,6 @@ class TimeLineActivity : AppCompatActivity(), TimelineAdapter.OnItemClickListene
         return dateFormat.format(currentDate.time)
     }
 
-    // TODO: 26/10/2021 move to WorkManager for scheduler
-    private fun addPostRanking() {
-        val dateId = "${currentDate.get(Calendar.MONTH)+1}.${currentDate.get(Calendar.YEAR)}"
-
-        val monthRank = TimelineInformation(dateId, getCurrentDate())
-        db.collection("TimeLine").document(dateId).set(monthRank)
-
-        db.collection("Posts").orderBy("postScore", Query.Direction.DESCENDING).limit(5).get()
-                .addOnSuccessListener { result->
-                    var rank = 1
-                    for (document in result){
-                        val queryPost = document.toObject(PostInformation::class.java)
-                        val rankedPost = RankedPostInfo(queryPost.userId, rank.toString(), queryPost.postPhotoURL, queryPost.postName, queryPost.postDate, queryPost.postContent, queryPost.postLikeCounter.size.toString(), queryPost.postDislikeCounter.size.toString())
-                        db.collection("TimeLine").document(dateId).collection("Post Ranking").add(rankedPost)
-                        rank += 1
-                    }
-                }
-    }
 
     override fun onResume() {
         super.onResume()

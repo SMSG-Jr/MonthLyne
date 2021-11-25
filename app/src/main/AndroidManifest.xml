@@ -4,6 +4,12 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <supports-screens
+        android:smallScreens="false"
+        android:normalScreens="true"
+        android:largeScreens="false"
+        android:xlargeScreens="false"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_custom"
@@ -12,12 +18,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MonthLyne"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.PostRankingActivity" />
-        <activity android:name=".activity.TimeLineActivity" />
-        <activity android:name=".activity.AddPostActivity" />
-        <activity android:name=".activity.FeedActivity" />
-        <activity android:name=".activity.ProfileActivity" />
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.PostRankingActivity" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".activity.TimeLineActivity" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".activity.AddPostActivity" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".activity.FeedActivity" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".activity.ProfileActivity" android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".activity.MainActivity" android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,5 +31,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

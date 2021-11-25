@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">MonthLyne</string>
+    <string name="e_mail">E-Mail:</string>
+    <string name="email">Email</string>
+    <string name="username">Username:</string>
+    <string name="name">Name</string>
+    <string name="current_post">Current Post:</string>
+    <string name="you_have_no_post_yet">You have no post, yet.</string>
+    <string name="add_new_post">Add new post.</string>
+    <string name="do_not_post_cringe"><![CDATA[Do NOT post cringe >:-(]]></string>
+    <string name="insert_message_here">Insert message here…</string>
+    <string name="send_post">Send post.</string>
+    <string name="post_ranking">Post Ranking</string>
+    <string name="posts">Posts</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
 </resources>

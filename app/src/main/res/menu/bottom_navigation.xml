@@ -3,16 +3,16 @@
     <item
         android:id="@+id/bottom_nav_post_ranking"
         android:icon="@drawable/ic_baseline_format_list_numbered_24"
-        android:title="Post Ranking" />
+        android:title="@string/post_ranking" />
 
     <item
         android:id="@+id/bottom_nav_post"
         android:icon="@drawable/ic_baseline_list_alt_24"
-        android:title="Posts" />
+        android:title="@string/posts" />
 
     <item
         android:id="@+id/bottom_nav_profile"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="Profile" />
+        android:title="@string/profile" />
 
 </menu>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MonthLyne</string>
+    <string name="e_mail">E-Mail:</string>
+    <string name="email">Email</string>
+    <string name="username">Nome do usuário:</string>
+    <string name="name">Nome</string>
+    <string name="current_post">Post atual:</string>
+    <string name="you_have_no_post_yet">Você não possui um post.</string>
+    <string name="add_new_post">Adicionar novo post.</string>
+    <string name="do_not_post_cringe"><![CDATA[NÃO seja cringe >:-(]]></string>
+    <string name="insert_message_here">Insira mensagem aqui…</string>
+    <string name="send_post">Enviar post.</string>
+    <string name="post_ranking">Post Ranking</string>
+    <string name="posts">Posts</string>
+    <string name="profile">Perfil</string>
+    <string name="logout">Sair</string>
+</resources>

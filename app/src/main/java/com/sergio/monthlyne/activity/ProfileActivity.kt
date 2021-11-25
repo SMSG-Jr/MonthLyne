@@ -147,14 +147,16 @@ class ProfileActivity : AppCompatActivity() {
                     if (postId != "") {
                         db.collection("Posts").document(postId).get()
                                 .addOnSuccessListener { postDoc ->
-                                    val postInfo: PostInformation = postDoc.toObject()!!
-                                    postProfileName.text = postInfo.postName
-                                    postProfileDate.text = postInfo.postDate
-                                    postProfileMessage.text = postInfo.postContent
-                                    postProfileLike.text = postInfo.postLikeCounter.size.toString()
-                                    postProfileDislike.text = postInfo.postDislikeCounter.size.toString()
-                                    Glide.with(this).load(postInfo.postPhotoURL).into(postProfilePhoto)
-                                    postVisible()
+                                    if (!postDoc.data.isNullOrEmpty()) {
+                                        val postInfo: PostInformation = postDoc.toObject()!!
+                                        postProfileName.text = postInfo.postName
+                                        postProfileDate.text = postInfo.postDate
+                                        postProfileMessage.text = postInfo.postContent
+                                        postProfileLike.text = postInfo.postLikeCounter.size.toString()
+                                        postProfileDislike.text = postInfo.postDislikeCounter.size.toString()
+                                        Glide.with(this).load(postInfo.postPhotoURL).into(postProfilePhoto)
+                                        postVisible()
+                                    }
                                 }.addOnFailureListener { exception ->
                                     Log.w("DataBase", "failed to get post document: $exception")
                                 }

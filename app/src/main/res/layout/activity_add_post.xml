@@ -39,11 +39,11 @@
         android:id="@+id/FAB_send_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
         android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_post_message"
         app:srcCompat="@android:drawable/ic_menu_send" />
 </androidx.constraintlayout.widget.ConstraintLayout>
